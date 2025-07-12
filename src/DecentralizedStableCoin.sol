@@ -37,34 +37,33 @@ import { Ownable } from "@openzeppelin/contracts/access/Ownable.sol";
  * Collateral Type: Crypto (ETH & BTC)
  * This is the contract meant to be owned by DSCEngine. It is a ERC20 token that can be minted and burned by the
  * DSCEngine smart contract.
- * @notice 
+ * @notice
  */
-
-
 contract DecentralizedStableCoin is ERC20Burnable, Ownable {
     error DecentralizedStableCoin__AmountMustBeGreaterThanZero();
     error DecentralizedStableCoin__BurnAmountExceedsBalance();
     error DecentralizedStableCoin__NotZeroAddress();
-    
-    constructor() ERC20("Decentralized Stable Coin", "DSC") {}
-        // The constructor initializes the ERC20 token with a name and symbol.
-        // No initial supply is minted, as this will be handled by the DSCEngine contract.
-    function burn(uint256 _amount) public override onlyOwner{
+
+    constructor() ERC20("Decentralized Stable Coin", "DSC") { }
+    // The constructor initializes the ERC20 token with a name and symbol.
+    // No initial supply is minted, as this will be handled by the DSCEngine contract.
+
+    function burn(uint256 _amount) public override onlyOwner {
         uint256 balance = balanceOf(msg.sender);
-        if(_amount <=0 ){
+        if (_amount <= 0) {
             revert DecentralizedStableCoin__AmountMustBeGreaterThanZero();
         }
-        if(balance < _amount){
+        if (balance < _amount) {
             revert DecentralizedStableCoin__BurnAmountExceedsBalance();
         }
         super.burn(_amount);
     }
 
     function mint(address _to, uint256 _amount) external onlyOwner returns (bool) {
-        if(_to == address(0)) {
+        if (_to == address(0)) {
             revert DecentralizedStableCoin__NotZeroAddress();
         }
-        if(_amount <= 0) {
+        if (_amount <= 0) {
             revert DecentralizedStableCoin__AmountMustBeGreaterThanZero();
         }
 
@@ -72,11 +71,3 @@ contract DecentralizedStableCoin is ERC20Burnable, Ownable {
         return true;
     }
 }
-
-
-
-
-
-
-
-
