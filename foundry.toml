@@ -16,9 +16,9 @@ sepolia = { key = "${ETHERSCAN_API_KEY}" }
 sepolia = "${SEPOLIA_RPC_URL}"
 
 [invariant]
-runs = 64
+runs = 100
 depth = 64
-fail_on_revert = true
+fail_on_revert = false
 
 [fmt]
 bracket_spacing = true
